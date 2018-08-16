@@ -12,7 +12,7 @@
 
 没有验证任务结束，出现报错即完成
 
-使用方式不变C:\Users\liguo\Documents\GitHub\tumblr_spider
+使用方式不变
 
 # python3 tumblr多线程爬虫
 给定 tumblr 用户的 username ，下载图片以及视频资源。  
