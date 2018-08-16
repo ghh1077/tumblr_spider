@@ -29,5 +29,8 @@
 # import
 >import tumblr  
 >tumblr.tumblr_id('username1,username2,username3...')
+
+
 原脚本地址
+
 https://github.com/yl-L/tumblr_spider
