@@ -13,12 +13,12 @@ def download(args):
     begin = 0 #start数值
     end = 50  #number数值
     while begin < 10000:
-        url = 'http://%s.tumblr.com/api/read/json?type=photo&start=%u&num=%u' %(args,begin,end)
+        url = 'http://%s.tumblr.com/api/read/json?type=video&start=%u&num=%u' %(args,begin,end)
         req = urllib.request.Request(url)
         req.add_header('User-Agent','Mozilla/5.0 (Linux; Android 5.0; SM-G900P Build/LRX21T) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.75 Mobile Safari/537.36')
         data=urllib.request.urlopen(req).read().decode('UTF-8')
         #print (data) #调试使用
-        print('%s start at '%args ,time.ctime())
+        print('开始下载%s 的第%u页数据'%(args ,(begin/50)+1))
         img = r'photo-url-1280":"(.{80,120}1280.jpg)'#正则表达式匹配图片
         video = r'source src=\\"(.{80,130})" type.*video-player-500'#正则表达式匹配图片
         l = 0
@@ -38,21 +38,20 @@ def download(args):
                 print("下载超时")
                 continue
             #print (gg) #调试使用
+            print('图片已完成下载%s' %args)
+
+        for v in re.findall(video,data):#视频下载
+            d = v.replace('\\', '')
+            videofilename = d.split("/")[-1]
+            videofilename += '.mp4'
+            print('At',time.ctime(),'Downloadiing %s from %s' % (videofilename, args))
+            videoDir = "./etc/mp4/"
+            if not os.path.exists(videoDir):
+                os.makedirs(videoDir)
+            urllib.request.urlretrieve(d, "%s%s" %(videoDir,videofilename))
+            print('视频已完成下载%s' % args)
         begin += 50
         end += 50
-    print('图片已完成下载%s' %args)
-
-    for v in re.findall(video,data):#视频下载
-        d = v.replace('\\', '')
-        videofilename = d.split("/")[-1]
-        videofilename += '.mp4'
-        print('At',time.ctime(),'Downloadiing %s from %s' % (videofilename, args))
-        videoDir = "./etc/mp4/"
-        if not os.path.exists(videoDir):
-            os.makedirs(videoDir)
-        urllib.request.urlretrieve(d, "%s%s" %(videoDir,videofilename))
-        print('视频已完成下载%s' % args)
-
 def tumblr_id(*args):
     args = str(args).strip("[]',)(").split(',')#修改输入的username字符串
     threads = []
