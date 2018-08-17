@@ -1,4 +1,4 @@
-# -*- coding:utf-8 -*-
+﻿# -*- coding:utf-8 -*-
 import time, re, os, urllib.request,sys,socket
 from threading import Lock, current_thread, Thread
 
@@ -13,7 +13,7 @@ def download(args):
     begin = 0 #start数值
     end = 50  #number数值
     while begin < 10000:
-        url = 'http://%s.tumblr.com/api/read/json?type=video&start=%u&num=%u' %(args,begin,end)
+        url = 'http://%s.tumblr.com/api/read/json?type=photo&start=%u&num=%u' %(args,begin,end)
         req = urllib.request.Request(url)
         req.add_header('User-Agent','Mozilla/5.0 (Linux; Android 5.0; SM-G900P Build/LRX21T) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.75 Mobile Safari/537.36')
         data=urllib.request.urlopen(req).read().decode('UTF-8')
